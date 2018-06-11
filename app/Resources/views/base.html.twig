@@ -2,8 +2,13 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Symfony REST Client Application">
+        <meta name="author" content="Ionut Mihaescu">
+
+        <title>{% block title %}Symfony REST Client Application!{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         {% block stylesheets %}
             {% stylesheets '%kernel.root_dir%/Resources/css/*' filter='cssrewrite' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
@@ -17,7 +22,10 @@
         <div class="container-fluid">
             <div class="row">
                 {% include 'default/sidebar.html.twig' %}
-                {% block body %}{% endblock %}
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                    {% include 'default/messages.html.twig' %}
+                    {% block body %}{% endblock %}
+                </main>
             </div>
         </div>
         {% javascripts '%kernel.root_dir%/Resources/js/*' %}

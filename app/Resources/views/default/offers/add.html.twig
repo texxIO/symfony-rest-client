@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="table-responsive">
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Add offer</h4>
+            <form class="needs-validation" novalidate="" method="post" action="/dashboard/offers/add">
+
+                <div class="mb-3">
+                    <label for="title">Title</label>
+                    <input class="form-control" id="title" placeholder="Offer title" required="" type="text" name="title">
+                    <div class="invalid-feedback">
+                        Please enter a valid title.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description">Description</label>
+
+                    <textarea class="form-control" id="description"  required="" name="description">
+                    </textarea>
+                    <div class="invalid-feedback">
+                        Please enter a valid description.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input class="form-control" id="email" placeholder="you@example.com" type="email" name="email">
+                    <div class="invalid-feedback">
+                        Please enter a valid email address.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image_url">Image</label>
+                    <input class="form-control" id="image_url" placeholder="" required="" type="text" name="image_url">
+                    <div class="invalid-feedback">
+                        Please enter a image url.
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Add offer</button>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
