@@ -127,13 +127,29 @@ class OfferController extends Controller
         return $this->render('default/offers/add.html.twig', $viewData);
     }
 
-     /**
+    /**
+     * TODO
      * @param Request $request
      * @Route("dashboard/offers/delete/{offerId}",requirements={"offerId"="\d+"}, name="offers_delete")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function deleteAction(Request $request)
+    public function deleteAction(int $offerId)
     {
 
+        try
+        {
+            $postRequest = $this->apiRequestClient->request('GET', '/api/offers/delete/'.$offerId);
+            //$postResponse = json_decode($postRequest->getBody(), true);
+            $viewData['messages'][] = 'Deleted:' . $postRequest->getBody();
+
+        }
+        catch( RequestException $e )
+        {
+            $viewData['messages'][] = $e->getMessage();
+            $viewData['errors'] = true;
+        }
+        return $this->render('default/index.html.twig', $viewData);
     }
 
 }
