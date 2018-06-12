@@ -21,15 +21,15 @@
                 {% for  id,offer in offers %}
                     <tr>
                         <td>{{ offer.id }}</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
+                        <td>{{ offer.title }}</td>
+                        <td>{{ offer.description }}</td>
+                        <td>{{ offer.email }}</td>
+                        <td>{{ offer.imageUrl }}</td>
+                        <td>{{ offer.creationDate }}</td>
                         <td>
-                            <span>View</span> |
-                            <span>Edit</span> |
-                            <span>Delete</span>
+                            <span><a href="{{ path('offers_show', {'offerId': offer.id}) }}">View</a></span> |
+                            <span><a href="{{ path('offers_edit', {'offerId': offer.id}) }}">Edit</a></span> |
+                            <span><a href="{{ path('offers_delete', {'offerId': offer.id}) }}">Delete</a></span>
                         </td>
                     </tr>
                 {% endfor %}

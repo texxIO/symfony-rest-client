@@ -2,38 +2,45 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Services\ApiRequestService;
 use GuzzleHttp\Exception\RequestException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use GuzzleHttp\Client;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+
 class OfferController extends Controller
 {
+    private $apiRequestClient;
+
+    public function __construct(ApiRequestService $apiRequestService)
+    {
+        $this->apiRequestClient = $apiRequestService->getApiRequestClient();
+    }
 
     /**
-     * @Route("dashboard/offers")
-     *
+     * @Route("dashboard", name="home")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
-
-        $apiRequestClient = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->getParameter('offers_api_url'),
-            // You can set any number of default request options.
-            'timeout' => 2.0,
-        ]);
-
+        return $this->render('default/index.html.twig');
+    }
+    /**
+     * @Route("dashboard/offers", name="offers_list")
+     *
+     */
+    public function listAction()
+    {
         $viewData = ['offers' => [],
-            'messages' => []];
+            'messages' => [],
+            'errors' => false];
+
 
         try {
-            $offers = $apiRequestClient->get('api/offers');
+            $offers = $this->apiRequestClient->get('api/offers');
             if ($offers->getStatusCode() == 200) {
-                $viewData['offers'] = $offers->getBody();
-            }
-            else
-            {
+                $viewData['offers'] = json_decode($offers->getBody());
+            } else {
                 $viewData['messages'][] = 'Failed API response code';
                 $viewData['error'] = true;
             }
@@ -48,22 +55,21 @@ class OfferController extends Controller
     }
 
     /**
-     * @param int $id
-     * @Route("dashboard/offers/{offerId}", requirements={"offerId"="\d+"})
+     * @param int $offerId
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("dashboard/offers/{offerId}", requirements={"offerId"="\d+"}, name="offers_show")
      */
-    public function showAction( int $offerId )
+    public function showAction(int $offerId)
     {
         $viewData = ['offer' => [],
-            'errors' => []];
+            'messages' => [],
+            'errors' => false];
 
         try {
-            $offers = $this->apiRequestClient->get('api/offers/'.$offerId);
+            $offers = $this->apiRequestClient->get('api/offers/' . $offerId);
             if ($offers->getStatusCode() == 200) {
-                $viewData['offer'] = $offers->getBody();
-            }
-            else
-            {
+                $viewData['offer'] = json_decode($offers->getBody());
+            } else {
                 $viewData['messages'][] = 'Failed API response code';
                 $viewData['error'] = true;
             }
@@ -74,25 +80,60 @@ class OfferController extends Controller
             $viewData['error'] = true;
 
         }
-
-
         return $this->render('default/offers/show.html.twig', $viewData);
     }
 
-
     /**
      * @param Request $request
-     * @Route("dashboard/offers/add")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @Route("dashboard/offers/add",  name="offers_add")
+     */
+    public function addAction(Request $request)
+    {
+        $viewData = [ 'messages' => [],
+            'errors' => false];
+
+        if ($request->getMethod() == 'POST') {
+
+            try
+            {
+                $offerData = $request->request->all();
+                $postRequest = $this->apiRequestClient->request('POST', 'api/offer', ['form_params' => $offerData]);
+
+                $postResponse = json_decode($postRequest->getBody(), true);
+                $viewData['messages'][] = 'Offer added with ID:' . $postResponse['offerId'];
+
+            }
+            catch( RequestException $e )
+            {
+                $viewData['messages'][] = $e->getMessage();
+                $viewData['errors'] = true;
+            }
+
+        }
+        return $this->render('default/offers/add.html.twig', $viewData);
+    }
+
+    /**
+     * TODO
+     * @param Request $request
+     * @Route("dashboard/offers/edit/{offerId}", requirements={"offerId"="\d+"}, name="offers_edit")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addAction( Request $request )
+    public function editAction(Request $request)
     {
-        if ( $request->getMethod() == 'POST' )
-        {
-            echo '<pre>' . print_r($request->request->all(),true) . '</pre>';
-            exit($request->request->all());
-        }
-        return $this->render('default/offers/add.html.twig');
+        $viewData = [];
+        return $this->render('default/offers/add.html.twig', $viewData);
+    }
+
+     /**
+     * @param Request $request
+     * @Route("dashboard/offers/delete/{offerId}",requirements={"offerId"="\d+"}, name="offers_delete")
+     */
+    public function deleteAction(Request $request)
+    {
+
     }
 
 }

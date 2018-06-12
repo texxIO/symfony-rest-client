@@ -33,3 +33,6 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    AppBundle\Services\ApiRequestService:
+        arguments:
+            $offers_api_url: 'http://tradus.local'
