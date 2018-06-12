@@ -14,9 +14,18 @@ INSTALL
 ```
  AppBundle\Services\ApiRequestService: 
     arguments: 
-        $offers_api_url: 'http://tradus.local 
+        $offers_api_url: 'http://tradus.local' 
  ```           
  
 4. Configure the `$offers_api_url` with the API server
 
 5. Run using `php bin/console server:run` or with a web server .
+
+TODO
+----
+
+- Implement validation
+- Implement session flashBag messages
+- Unit Tests
+- Authentication 
+- Dockerize

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="table-responsive">
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Edit offer</h4>
+            <form class="needs-validation" novalidate="" method="post" action="/dashboard/offers/edit/{{ offer.id }}">
+                <div class="mb-3">
+                    <label for="title">Title</label>
+                    <input class="form-control" id="title" placeholder="Offer title"  value="{{ offer.title }}" type="text" name="title">
+                </div>
+
+                <div class="mb-3">
+                    <label for="description">Description</label>
+
+                    <textarea class="form-control" id="description"  name="description">{{ offer.description }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input class="form-control" id="email" placeholder="you@example.com" type="email" value="{{ offer.email }}" name="email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="image_url">Image</label>
+                    <input class="form-control" id="image_url" placeholder="" type="text" value="{{ offer.imageUrl }}" name="image_url">
+                </div>
+
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Update offer</button>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
