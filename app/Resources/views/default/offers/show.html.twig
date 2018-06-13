@@ -35,17 +35,20 @@
 
             </tbody>
         </table>
-        <div class="col-md-3">
+
+    </div>
+    <div class="row">
+        <div class="col-md-1 text-left">
             <a href="{{ path('offers_list') }}">
                 <button type="button" class="btn btn-outline-primary">Go back</button>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-1 text-left">
             <a href="{{ path('offers_edit', {"offerId":offer.id} ) }}">
                 <button type="button" class="btn btn-outline-primary">Edit</button>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-1 text-left">
             <a href="{{ path('offers_delete' , {"offerId":offer.id} ) }}">
                 <button type="button" class="btn btn-outline-primary">Delete</button>
             </a>
