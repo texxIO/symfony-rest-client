@@ -1,7 +1,7 @@
-{% if messages|default('') %}
-<div class="alert alert-{% if error|default(false) %}danger{% else %}primary{% endif %}" role="alert">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}
-</div>
-{% endif %}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
