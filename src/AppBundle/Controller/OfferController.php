@@ -36,7 +36,7 @@
 
 
             try {
-                $offers = $this->apiRequestClient->get('api/offerss');
+                $offers = $this->apiRequestClient->get('api/offers');
                 $viewData['offers'] = json_decode($offers->getBody());
 
             } catch (RequestException $e) {
