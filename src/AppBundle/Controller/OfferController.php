@@ -160,10 +160,10 @@
         }
 
         /**
-         * @param Request $request
-         * @Route("dashboard/offers/delete/{offerId}",requirements={"offerId"="\d+"}, name="offers_delete")
+         * @param int $offerId
          * @return \Symfony\Component\HttpFoundation\Response
          * @throws \GuzzleHttp\Exception\GuzzleException
+         * @Route("dashboard/offers/delete/{offerId}",requirements={"offerId"="\d+"}, name="offers_delete")
          */
         public function deleteAction(int $offerId)
         {
